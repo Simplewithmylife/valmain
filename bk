@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0x94alwaydecen - PoS Validator</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: system-ui, -apple-system, sans-serif; overflow-x: hidden; }
+        .app { min-height: 100vh; background: linear-gradient(to bottom right, #020617, #581c87, #020617); color: white; position: relative; }
+        .nav { position: relative; z-index: 50; border-bottom: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(12px); background: rgba(0,0,0,0.2); }
+        .nav-content { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 3.5rem; }
+        .logo-btn { display: flex; align-items: center; gap: 0.75rem; background: none; border: none; cursor: pointer; }
+        .logo-icon { width: 2.5rem; height: 2.5rem; background: linear-gradient(to bottom right, #a855f7, #ec4899); border-radius: 0.5rem; }
+        .logo-text { font-size: 1.25rem; font-weight: bold; background: linear-gradient(to right, #c084fc, #f9a8d4); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .menu-btn { padding: 0.5rem; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        .menu-btn:hover { background: rgba(255,255,255,0.1); border-radius: 0.5rem; }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 40; }
+        .menu { position: fixed; right: 1rem; top: 4rem; backdrop-filter: blur(12px); background: rgba(0,0,0,0.95); border: 2px solid rgba(255,255,255,0.2); border-radius: 1rem; z-index: 50; min-width: 220px; }
+        .menu-item { width: 100%; padding: 1rem 1.5rem; background: none; border: none; color: white; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .menu-item:last-child { border-bottom: none; }
+        .menu-item:hover { background: rgba(255,255,255,0.1); }
+        .menu-item img { width: 2rem; height: 2rem; object-fit: contain; }
+        .container { position: relative; z-index: 10; max-width: 1200px; margin: 0 auto; padding: 3rem 1.5rem; }
+        .hero { text-align: center; margin-bottom: 3rem; }
+        .hero-icon { width: 7rem; height: 7rem; background: linear-gradient(to bottom right, #a855f7, #ec4899, #a855f7); border-radius: 1.5rem; margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 20px 25px -5px rgba(168,85,247,0.5); }
+        .hero-title { font-size: 3rem; font-weight: bold; margin-bottom: 1rem; background: linear-gradient(to right, white, #e9d5ff, #fbcfe8); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .hero-subtitle { font-size: 1.5rem; color: #d8b4fe; margin-bottom: 1rem; font-weight: 600; }
+        .hero-desc { color: #d1d5db; max-width: 42rem; margin: 0 auto; line-height: 1.75; }
+        .card { backdrop-filter: blur(12px); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 1.5rem; padding: 2.5rem; margin-bottom: 2rem; }
+        .card-title { font-size: 2rem; font-weight: bold; margin-bottom: 1.5rem; background: linear-gradient(to right, #c084fc, #f9a8d4); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .card-text { color: #d1d5db; line-height: 1.75; }
+        .grid { display: grid; gap: 1.5rem; margin-bottom: 2rem; }
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .feature { backdrop-filter: blur(12px); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 1rem; padding: 2rem; }
+        .feature:hover { background: rgba(255,255,255,0.1); }
+        .lava-bg { background: linear-gradient(to bottom right, #7f1d1d, #c2410c, #7f1d1d); }
+        .lava-hero { text-align: center; margin-bottom: 3rem; }
+        .lava-logo { width: 10rem; height: 10rem; margin: 0 auto 2rem; object-fit: contain; filter: drop-shadow(0 20px 25px rgba(234,88,12,0.5)); }
+        .lava-title { font-size: 4rem; font-weight: bold; margin-bottom: 1.5rem; background: linear-gradient(to right, #fca5a5, #fdba74, #fde047); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .lava-subtitle { font-size: 1.5rem; color: #fed7aa; margin-bottom: 1.5rem; font-weight: bold; }
+        .lava-desc { color: rgba(254,243,199,0.8); max-width: 48rem; margin: 0 auto; line-height: 1.75; }
+        .stake-btn { display: block; width: fit-content; margin: 3rem auto; padding: 1.25rem 2.5rem; background: linear-gradient(to right, #dc2626, #ea580c, #dc2626); border-radius: 9999px; font-weight: bold; font-size: 1.25rem; color: white; text-decoration: none; box-shadow: 0 20px 25px -5px rgba(239,68,68,0.5); transition: transform 0.3s; }
+        .stake-btn:hover { transform: scale(1.1); }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+        .fact-card { backdrop-filter: blur(12px); background: linear-gradient(to bottom right, rgba(127,29,29,0.4), rgba(194,65,12,0.4)); border: 1px solid rgba(251,146,60,0.3); border-radius: 1.5rem; padding: 1.5rem; text-align: center; transition: transform 0.3s; }
+        .fact-card:hover { transform: scale(1.05); border-color: rgba(251,146,60,0.5); }
+        .fact-emoji { font-size: 3rem; margin-bottom: 0.75rem; }
+        .fact-title { font-size: 1.25rem; font-weight: bold; color: #fed7aa; margin-bottom: 0.5rem; }
+        .fact-desc { color: rgba(254,243,199,0.7); }
+        .validator-card { backdrop-filter: blur(12px); background: linear-gradient(to bottom right, rgba(127,29,29,0.5), rgba(194,65,12,0.5)); border: 2px solid rgba(251,146,60,0.4); border-radius: 1.5rem; padding: 2.5rem; margin-bottom: 3rem; }
+        .validator-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+        .validator-icon { width: 4rem; height: 4rem; background: linear-gradient(to bottom right, #ef4444, #f97316); border-radius: 1rem; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+        .validator-title { font-size: 2rem; font-weight: bold; color: #fed7aa; }
+        .validator-subtitle { color: rgba(253,186,116,0.7); }
+        .address-box { background: rgba(0,0,0,0.4); border-radius: 1rem; padding: 1.5rem; border: 1px solid rgba(251,146,60,0.3); backdrop-filter: blur(4px); }
+        .address-code { font-size: 0.875rem; color: #fdba74; word-break: break-all; font-family: monospace; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
+        .stat-card { backdrop-filter: blur(12px); background: linear-gradient(to bottom right, rgba(153,27,27,0.4), rgba(194,65,12,0.4)); border: 1px solid rgba(251,146,60,0.3); border-radius: 1rem; padding: 1.5rem; text-align: center; transition: transform 0.3s; }
+        .stat-card:hover { transform: scale(1.05); }
+        .stat-label { font-size: 0.875rem; color: rgba(253,186,116,0.7); margin-bottom: 0.5rem; }
+        .stat-value { font-size: 2rem; font-weight: bold; color: #fed7aa; }
+        @media (max-width: 640px) {
+            .hero-title { font-size: 2rem; }
+            .lava-title { font-size: 2.5rem; }
+            .nav-content { height: 3rem; }
+            .logo-icon { width: 2rem; height: 2rem; }
+            .logo-text { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="module">
+        const LOGO = "https://i.ibb.co/DHDmKwtJ/lava.png";
+        let state = { page: 'home', menu: false };
+
+        function render() {
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="app ${state.page === 'lava' ? 'lava-bg' : ''}">
+                    ${state.menu ? '<div class="overlay" onclick="toggleMenu()"></div>' : ''}
+                    
+                    <nav class="nav">
+                        <div class="nav-content">
+                            <button class="logo-btn" onclick="goTo('home')">
+                                <div class="logo-icon"></div>
+                                <span class="logo-text">0x94alwaydecen</span>
+                            </button>
+                            <button class="menu-btn" onclick="toggleMenu()">${state.menu ? '✕' : '☰'}</button>
+                        </div>
+                        ${state.menu ? `
+                            <div class="menu">
+                                <button class="menu-item" onclick="goTo('home')">🏠 Home</button>
+                                <button class="menu-item" onclick="goTo('lava')">
+                                    <img src="${LOGO}" alt="Lava">
+                                    Lava Network
+                                </button>
+                            </div>
+                        ` : ''}
+                    </nav>
+
+                    ${state.page === 'home' ? `
+                        <div class="container">
+                            <div class="hero">
+                                <div class="hero-icon">🖥️</div>
+                                <h1 class="hero-title">0x94alwaydecen</h1>
+                                <p class="hero-subtitle">Proof-of-Stake Validator</p>
+                                <p class="hero-desc">
+                                    Professional blockchain validator with multiple years of experience securing PoS networks. 
+                                    Committed to decentralization, transparency, and high performance.
+                                </p>
+                            </div>
+
+                            <div class="card">
+                                <h2 class="card-title">About</h2>
+                                <p class="card-text">
+                                    Experienced validator operator specializing in Proof-of-Stake blockchain networks. 
+                                    With a strong background in DevOps and system administration, we ensure reliable and secure node operations.
+                                </p>
+                                <br>
+                                <p class="card-text">
+                                    Our mission is to contribute to the blockchain ecosystem by providing trustworthy validation services 
+                                    while supporting network decentralization and community growth.
+                                </p>
+                            </div>
+
+                            <h2 style="font-size: 2rem; font-weight: bold; text-align: center; margin-bottom: 2rem;">Expertise</h2>
+                            <div class="grid grid-2">
+                                <div class="feature">
+                                    <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">🖥️ Infrastructure</h3>
+                                    <p style="color: #d1d5db;">Enterprise-grade server setup with optimal performance</p>
+                                </div>
+                                <div class="feature">
+                                    <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">🛡️ Security</h3>
+                                    <p style="color: #d1d5db;">Multi-layer protection with 24/7 monitoring</p>
+                                </div>
+                                <div class="feature">
+                                    <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">⏰ Uptime</h3>
+                                    <p style="color: #d1d5db;">High availability with automated redundancy</p>
+                                </div>
+                                <div class="feature">
+                                    <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">⚡ Performance</h3>
+                                    <p style="color: #d1d5db;">Optimized for speed and reliability</p>
+                                </div>
+                            </div>
+                        </div>
+                    ` : `
+                        <div class="container">
+                            <div class="lava-hero">
+                                <img src="${LOGO}" alt="Lava Network" class="lava-logo">
+                                <h1 class="lava-title">🌋 Lava Network 🔥</h1>
+                                <p class="lava-subtitle">Erupting the Future of Decentralized RPC!</p>
+                                <p class="lava-desc">
+                                    Join the hottest validator in the Lava ecosystem! We're not just validating blocks - 
+                                    we're creating volcanic momentum for the entire network!
+                                </p>
+                            </div>
+
+                            <a href="https://www.lavacenter.xyz/lava/staking/lava@valoper1c8jdf8ysl2c0wt7mjqa467rdls6c4ufwh0qx8f" 
+                               target="_blank" class="stake-btn">
+                                🔥 Stake Now & Earn Rewards!
+                            </a>
+
+                            <div class="grid grid-3">
+                                <div class="fact-card">
+                                    <div class="fact-emoji">🔥</div>
+                                    <h3 class="fact-title">HOT Performance</h3>
+                                    <p class="fact-desc">Blazing fast block validation</p>
+                                </div>
+                                <div class="fact-card">
+                                    <div class="fact-emoji">🌋</div>
+                                    <h3 class="fact-title">Explosive Rewards</h3>
+                                    <p class="fact-desc">Competitive APY for stakers</p>
+                                </div>
+                                <div class="fact-card">
+                                    <div class="fact-emoji">💎</div>
+                                    <h3 class="fact-title">Solid as Magma</h3>
+                                    <p class="fact-desc">99.9% uptime guarantee</p>
+                                </div>
+                            </div>
+
+                            <div class="validator-card">
+                                <div class="validator-header">
+                                    <div class="validator-icon">🔒</div>
+                                    <div>
+                                        <h3 class="validator-title">Validator Address</h3>
+                                        <p class="validator-subtitle">Secured & Verified</p>
+                                    </div>
+                                </div>
+                                <div class="address-box">
+                                    <code class="address-code">lava@valoper1c8jdf8ysl2c0wt7mjqa467rdls6c4ufwh0qx8f</code>
+                                </div>
+                            </div>
+
+                            <div class="stats">
+                                <div class="stat-card">
+                                    <div class="stat-label">🎯 Uptime</div>
+                                    <div class="stat-value">99.9%</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-label">💰 Commission</div>
+                                    <div class="stat-value">10%</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-label">⚡ Status</div>
+                                    <div class="stat-value">Active</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-label">🌐 Network</div>
+                                    <div class="stat-value">Lava Mainnet</div>
+                                </div>
+                            </div>
+                        </div>
+                    `}
+                </div>
+            `;
+        }
+
+        window.goTo = (page) => {
+            state.page = page;
+            state.menu = false;
+            render();
+        };
+
+        window.toggleMenu = () => {
+            state.menu = !state.menu;
+            render();
+        };
+
+        render();
+    </script>
+</body>
+</html>
