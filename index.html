@@ -28,8 +28,6 @@
         .hero-icon::after { content: ''; position: absolute; inset: -2px; background: linear-gradient(135deg, rgba(168,85,247,0.3), rgba(236,72,153,0.3)); border-radius: 4rem; z-index: -1; opacity: 0.5; filter: blur(20px); }
         .hero-icon img { width: 100%; height: 100%; object-fit: contain; position: relative; z-index: 1; border-radius: 3rem; }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
-        @keyframes shine { 0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); } 100% { transform: translateX(100%) translateY(100%) rotate(45deg); } }
-        @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
         .hero-title { font-size: 3.5rem; font-weight: bold; margin-bottom: 1rem; background: linear-gradient(135deg, #fff 0%, #e9d5ff 25%, #f9a8d4 50%, #e9d5ff 75%, #fff 100%); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent; position: relative; animation: gradientShift 4s ease infinite, textGlow 2s ease-in-out infinite; letter-spacing: -0.02em; }
         @keyframes gradientShift { 0%, 100% { background-position: 0% center; } 50% { background-position: 100% center; } }
         @keyframes textGlow { 0%, 100% { filter: drop-shadow(0 0 15px rgba(192,132,252,0.6)) drop-shadow(0 0 30px rgba(236,72,153,0.4)); } 50% { filter: drop-shadow(0 0 25px rgba(236,72,153,0.8)) drop-shadow(0 0 40px rgba(192,132,252,0.6)); } }
@@ -68,12 +66,83 @@
         .stat-card:hover { transform: scale(1.05); }
         .stat-label { font-size: 0.875rem; color: rgba(253,186,116,0.7); margin-bottom: 0.5rem; }
         .stat-value { font-size: 2rem; font-weight: bold; color: #fed7aa; }
+        
+        .cosmos-bg { background: #000000; position: relative; overflow: hidden; }
+        .cosmos-bg::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 20% 30%, rgba(138,43,226,0.15) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(75,0,130,0.15) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(25,25,112,0.1) 0%, transparent 50%); z-index: 0; }
+        .stars { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+        .star { position: absolute; width: 2px; height: 2px; background: white; border-radius: 50%; animation: twinkle 3s infinite; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+        .blackhole { position: absolute; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, transparent 30%, rgba(138,43,226,0.4) 40%, rgba(75,0,130,0.6) 60%, rgba(0,0,0,0.9) 80%); animation: rotate 20s linear infinite, pulse 4s ease-in-out infinite; box-shadow: 0 0 100px rgba(138,43,226,0.6), inset 0 0 50px rgba(0,0,0,0.8); z-index: 1; pointer-events: none; }
+        @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.1); opacity: 0.8; } }
+        .blackhole::after { content: ''; position: absolute; inset: 35%; border-radius: 50%; background: radial-gradient(circle, rgba(75,0,130,0.9), transparent); animation: swirl 3s linear infinite; }
+        @keyframes swirl { 0% { transform: rotate(0deg) scale(1); } 100% { transform: rotate(360deg) scale(1.2); } }
+        .lumen-hero { text-align: center; margin-bottom: 4rem; position: relative; }
+        .lumen-logo-wrap { position: relative; width: 12rem; height: 12rem; margin: 0 auto 2rem; }
+        .lumen-logo { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 40px rgba(138,43,226,0.8)) drop-shadow(0 0 80px rgba(75,0,130,0.6)); animation: float 4s ease-in-out infinite, glow-pulse 3s ease-in-out infinite; position: relative; z-index: 2; }
+        @keyframes glow-pulse { 0%, 100% { filter: drop-shadow(0 0 40px rgba(138,43,226,0.8)) drop-shadow(0 0 80px rgba(75,0,130,0.6)); } 50% { filter: drop-shadow(0 0 60px rgba(138,43,226,1)) drop-shadow(0 0 120px rgba(75,0,130,0.8)); } }
+        .lumen-logo-wrap::before { content: ''; position: absolute; inset: -20px; background: radial-gradient(circle, rgba(138,43,226,0.3), transparent 70%); border-radius: 50%; animation: orbit 8s linear infinite; z-index: 1; }
+        @keyframes orbit { 0% { transform: rotate(0deg) scale(1); opacity: 0.5; } 50% { transform: rotate(180deg) scale(1.2); opacity: 0.8; } 100% { transform: rotate(360deg) scale(1); opacity: 0.5; } }
+        .lumen-title { font-size: 4.5rem; font-weight: bold; margin-bottom: 1rem; background: linear-gradient(135deg, #ffffff 0%, #ba68c8 20%, #9c27b0 40%, #7b1fa2 60%, #4a148c 80%, #ba68c8 100%); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent; animation: cosmicShift 6s ease infinite, cosmicGlow 3s ease-in-out infinite; letter-spacing: 0.05em; }
+        @keyframes cosmicShift { 0%, 100% { background-position: 0% center; } 50% { background-position: 100% center; } }
+        @keyframes cosmicGlow { 0%, 100% { filter: drop-shadow(0 0 20px rgba(138,43,226,0.6)); } 50% { filter: drop-shadow(0 0 40px rgba(138,43,226,0.9)); } }
+        .lumen-subtitle { font-size: 1.75rem; color: #ba68c8; margin-bottom: 1.5rem; font-weight: 600; text-shadow: 0 0 20px rgba(186,104,200,0.5); }
+        .lumen-desc { color: rgba(186,104,200,0.9); max-width: 50rem; margin: 0 auto 3rem; line-height: 2; font-size: 1.1rem; text-shadow: 0 0 10px rgba(138,43,226,0.3); }
+        .cosmic-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 3rem; perspective: 1000px; }
+        .cosmic-card { backdrop-filter: blur(16px); background: linear-gradient(135deg, rgba(138,43,226,0.1), rgba(75,0,130,0.15)); border: 2px solid rgba(138,43,226,0.3); border-radius: 2rem; padding: 2.5rem; position: relative; overflow: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 8px 32px rgba(138,43,226,0.2), inset 0 0 20px rgba(138,43,226,0.05); }
+        .cosmic-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(186,104,200,0.2), transparent 50%); opacity: 0; transition: opacity 0.3s; }
+        .cosmic-card:hover::before { opacity: 1; }
+        .cosmic-card:hover { transform: translateY(-10px) rotateX(5deg); border-color: rgba(186,104,200,0.6); box-shadow: 0 20px 60px rgba(138,43,226,0.4), inset 0 0 30px rgba(138,43,226,0.1); }
+        .cosmic-icon { font-size: 3.5rem; margin-bottom: 1rem; display: block; filter: drop-shadow(0 0 15px rgba(138,43,226,0.6)); animation: float 3s ease-in-out infinite; }
+        .cosmic-card-title { font-size: 1.5rem; font-weight: bold; color: #ba68c8; margin-bottom: 0.75rem; text-shadow: 0 0 10px rgba(186,104,200,0.4); }
+        .cosmic-card-desc { color: rgba(186,104,200,0.7); line-height: 1.6; }
+        .nebula-stake-btn { display: block; width: fit-content; margin: 0 auto 4rem; padding: 1.5rem 3rem; background: linear-gradient(135deg, #7b1fa2, #9c27b0, #ba68c8, #9c27b0, #7b1fa2); background-size: 200% auto; border-radius: 9999px; font-weight: bold; font-size: 1.5rem; color: white; text-decoration: none; box-shadow: 0 0 40px rgba(138,43,226,0.6), 0 20px 40px rgba(138,43,226,0.3); transition: all 0.3s; position: relative; overflow: hidden; animation: gradientShift 3s ease infinite; border: 2px solid rgba(186,104,200,0.5); }
+        .nebula-stake-btn::before { content: ''; position: absolute; inset: -2px; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent); transform: translateX(-100%); transition: transform 0.6s; }
+        .nebula-stake-btn:hover::before { transform: translateX(100%); }
+        .nebula-stake-btn:hover { transform: scale(1.1); box-shadow: 0 0 60px rgba(138,43,226,0.8), 0 25px 50px rgba(138,43,226,0.5); }
+        .galaxy-info { backdrop-filter: blur(16px); background: linear-gradient(135deg, rgba(75,0,130,0.2), rgba(138,43,226,0.15)); border: 2px solid rgba(138,43,226,0.4); border-radius: 2rem; padding: 3rem; margin-bottom: 3rem; position: relative; overflow: hidden; box-shadow: 0 10px 40px rgba(138,43,226,0.3), inset 0 0 30px rgba(138,43,226,0.05); }
+        .galaxy-info::after { content: ''; position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(186,104,200,0.1), transparent 40%); animation: rotate 30s linear infinite; pointer-events: none; }
+        .galaxy-header { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; position: relative; z-index: 2; }
+        .galaxy-icon { width: 5rem; height: 5rem; background: radial-gradient(circle, rgba(138,43,226,0.6), rgba(75,0,130,0.8)); border-radius: 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; box-shadow: 0 0 30px rgba(138,43,226,0.6); animation: pulse 3s ease-in-out infinite; }
+        .galaxy-title { font-size: 2.5rem; font-weight: bold; color: #ba68c8; text-shadow: 0 0 20px rgba(186,104,200,0.6); }
+        .galaxy-subtitle { color: rgba(186,104,200,0.7); font-size: 1.1rem; }
+        .cosmos-address-box { background: rgba(0,0,0,0.6); border-radius: 1.5rem; padding: 2rem; border: 2px solid rgba(138,43,226,0.4); backdrop-filter: blur(8px); position: relative; z-index: 2; box-shadow: inset 0 0 20px rgba(138,43,226,0.2); }
+        .cosmos-address-code { font-size: 1rem; color: #ba68c8; word-break: break-all; font-family: monospace; text-shadow: 0 0 10px rgba(186,104,200,0.5); }
+        .universe-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+        .universe-stat { backdrop-filter: blur(16px); background: linear-gradient(135deg, rgba(75,0,130,0.3), rgba(138,43,226,0.2)); border: 2px solid rgba(138,43,226,0.3); border-radius: 1.5rem; padding: 2rem; text-align: center; transition: all 0.3s; position: relative; overflow: hidden; box-shadow: 0 4px 20px rgba(138,43,226,0.2); }
+        .universe-stat::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(186,104,200,0.2), transparent 70%); opacity: 0; transition: opacity 0.3s; }
+        .universe-stat:hover::before { opacity: 1; }
+        .universe-stat:hover { transform: scale(1.05); border-color: rgba(186,104,200,0.6); box-shadow: 0 8px 30px rgba(138,43,226,0.4); }
+        .universe-stat-label { font-size: 1rem; color: rgba(186,104,200,0.8); margin-bottom: 0.75rem; font-weight: 500; }
+        .universe-stat-value { font-size: 2.25rem; font-weight: bold; color: #ba68c8; text-shadow: 0 0 15px rgba(186,104,200,0.6); }
+        
         @media (max-width: 640px) {
             .hero-title { font-size: 2rem; }
             .lava-title { font-size: 2.5rem; }
+            .lumen-title { font-size: 2.5rem; }
             .nav-content { height: 3rem; }
             .logo-icon { width: 2rem; height: 2rem; }
             .logo-text { font-size: 1rem; }
+            .blackhole { width: 150px; height: 150px; }
+            .cosmic-grid { grid-template-columns: 1fr; }
+            .lumen-grid-2 { grid-template-columns: 1fr !important; }
+            .lumen-stats-4 { grid-template-columns: 1fr 1fr !important; }
+            .lumen-card-title { font-size: 1.5rem !important; }
+            .lumen-planet { font-size: 3rem !important; }
+            .lumen-percent { font-size: 2rem !important; }
+        }
+        @media (max-width: 768px) {
+            .lumen-logo-wrap { width: 8rem; height: 8rem; }
+            .lumen-title { font-size: 2.5rem; }
+            .lumen-subtitle { font-size: 1.25rem; }
+            .nebula-stake-btn { font-size: 1.2rem; padding: 1.2rem 2rem; }
+            .blackhole { width: 180px; height: 180px; }
+            .lumen-grid-2 { grid-template-columns: 1fr; }
+            .lumen-card-padding { padding: 2rem !important; }
+        }
+        @media (max-width: 1024px) {
+            .container { padding: 2rem 1rem; }
+            .lumen-stats-4 { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
@@ -83,12 +152,40 @@
     <script type="module">
         const LOGO = "https://i.ibb.co/DHDmKwtJ/lava.png";
         const CORE_LOGO = "https://raw.githubusercontent.com/1simpleflook/valmain/refs/heads/main/images/clg.png";
+        const LUMEN_LOGO = "https://raw.githubusercontent.com/1simpleflook/valmain/refs/heads/main/images/lume-mainnet.png";
         let state = { page: 'home', menu: false };
+
+        function createStars() {
+            let stars = '<div class="stars">';
+            for (let i = 0; i < 200; i++) {
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                const delay = Math.random() * 3;
+                stars += `<div class="star" style="left: ${x}%; top: ${y}%; animation-delay: ${delay}s;"></div>`;
+            }
+            stars += '</div>';
+            return stars;
+        }
+
+        function createBlackholes() {
+            const positions = [
+                { top: '10%', left: '15%' },
+                { top: '60%', right: '20%' },
+                { bottom: '15%', left: '50%' }
+            ];
+            let holes = '';
+            positions.forEach(pos => {
+                const style = Object.entries(pos).map(([k, v]) => `${k}: ${v}`).join('; ');
+                holes += `<div class="blackhole" style="${style}"></div>`;
+            });
+            return holes;
+        }
 
         function render() {
             const app = document.getElementById('app');
             app.innerHTML = `
-                <div class="app ${state.page === 'lava' ? 'lava-bg' : ''}">
+                <div class="app ${state.page === 'lava' ? 'lava-bg' : state.page === 'lumen' ? 'cosmos-bg' : ''}">
+                    ${state.page === 'lumen' ? createStars() + createBlackholes() : ''}
                     ${state.menu ? '<div class="overlay" onclick="toggleMenu()"></div>' : ''}
                     
                     <nav class="nav">
@@ -107,6 +204,10 @@
                                 <button class="menu-item" onclick="goTo('lava')">
                                     <img src="${LOGO}" alt="Lava">
                                     Lava Network
+                                </button>
+                                <button class="menu-item" onclick="goTo('lumen')">
+                                    <img src="${LUMEN_LOGO}" alt="Lumen">
+                                    Lumen Network
                                 </button>
                             </div>
                         ` : ''}
@@ -159,7 +260,7 @@
                                 </div>
                             </div>
                         </div>
-                    ` : `
+                    ` : state.page === 'lava' ? `
                         <div class="container">
                             <div class="lava-hero">
                                 <img src="${LOGO}" alt="Lava Network" class="lava-logo">
@@ -223,6 +324,89 @@
                                 <div class="stat-card">
                                     <div class="stat-label">🌐 Network</div>
                                     <div class="stat-value">Lava Mainnet</div>
+                                </div>
+                            </div>
+                        </div>
+                    ` : `
+                        <div class="container">
+                            <div class="lumen-hero">
+                                <div class="lumen-logo-wrap">
+                                    <img src="${LUMEN_LOGO}" alt="Lumen Network" class="lumen-logo">
+                                </div>
+                                <h1 class="lumen-title">LUMEN NETWORK</h1>
+                                <p class="lumen-subtitle">⭐ Cosmic Validator Protocol ⭐</p>
+                            </div>
+
+                            <div class="lumen-grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 4rem; align-items: center;">
+                                <div class="lumen-card-padding" style="backdrop-filter: blur(16px); background: linear-gradient(135deg, rgba(138,43,226,0.15), rgba(75,0,130,0.2)); border: 2px solid rgba(138,43,226,0.4); border-radius: 2rem; padding: 3rem; box-shadow: 0 10px 40px rgba(138,43,226,0.3);">
+                                    <h2 class="lumen-card-title" style="font-size: 2rem; font-weight: bold; color: #ba68c8; margin-bottom: 1.5rem; text-shadow: 0 0 15px rgba(186,104,200,0.6);">🌌 Intergalactic Node</h2>
+                                    <p style="color: rgba(186,104,200,0.85); line-height: 1.8; font-size: 1.05rem; margin-bottom: 1.5rem;">
+                                        Our validator nodes orbit across multiple dimensions, ensuring your stake travels through 
+                                        the safest cosmic pathways. Protected by antimatter shields and quantum encryption.
+                                    </p>
+                                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                        <span style="background: rgba(138,43,226,0.3); padding: 0.5rem 1rem; border-radius: 9999px; color: #ba68c8; font-size: 0.9rem; border: 1px solid rgba(186,104,200,0.4);">🚀 Warp Speed</span>
+                                        <span style="background: rgba(138,43,226,0.3); padding: 0.5rem 1rem; border-radius: 9999px; color: #ba68c8; font-size: 0.9rem; border: 1px solid rgba(186,104,200,0.4);">🛡️ Quantum Safe</span>
+                                        <span style="background: rgba(138,43,226,0.3); padding: 0.5rem 1rem; border-radius: 9999px; color: #ba68c8; font-size: 0.9rem; border: 1px solid rgba(186,104,200,0.4);">♾️ Infinite Uptime</span>
+                                    </div>
+                                </div>
+
+                                <div class="lumen-card-padding" style="backdrop-filter: blur(16px); background: linear-gradient(135deg, rgba(75,0,130,0.2), rgba(138,43,226,0.15)); border: 2px solid rgba(138,43,226,0.4); border-radius: 2rem; padding: 3rem; box-shadow: 0 10px 40px rgba(138,43,226,0.3);">
+                                    <h2 class="lumen-card-title" style="font-size: 2rem; font-weight: bold; color: #ba68c8; margin-bottom: 1.5rem; text-shadow: 0 0 15px rgba(186,104,200,0.6);">💫 Stellar Rewards</h2>
+                                    <div style="display: flex; align-items: center; gap: 2rem; margin-bottom: 1.5rem;">
+                                        <div class="lumen-planet" style="font-size: 5rem;">🪐</div>
+                                        <div>
+                                            <div class="lumen-percent" style="font-size: 3rem; font-weight: bold; color: #ba68c8; text-shadow: 0 0 20px rgba(186,104,200,0.7);">10%</div>
+                                            <div style="color: rgba(186,104,200,0.7); font-size: 1.1rem;">Commission Rate</div>
+                                        </div>
+                                    </div>
+                                    <p style="color: rgba(186,104,200,0.85); line-height: 1.8; font-size: 1.05rem;">
+                                        Harvest cosmic energy rewards while your tokens orbit our validator. 
+                                        Join thousands of stakers exploring the Lumen universe.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div style="text-align: center; margin-bottom: 4rem;">
+                                <a href="https://explorer.chaintools.tech/lumen/staking/lmnvaloper15fpv5dnc0s6ln5nepum4372kyml4ukr6lu6zw8" 
+                                   target="_blank" class="nebula-stake-btn">
+                                    🌟 ENTER THE CM-LUMEN 🌟
+                                </a>
+                            </div>
+
+                            <div style="backdrop-filter: blur(16px); background: linear-gradient(to right, rgba(75,0,130,0.15), rgba(138,43,226,0.2), rgba(75,0,130,0.15)); border: 2px solid rgba(138,43,226,0.35); border-radius: 2rem; padding: 2.5rem; margin-bottom: 3rem; box-shadow: 0 8px 32px rgba(138,43,226,0.25);">
+                                <div style="display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem;">
+                                    <div style="font-size: 4rem; filter: drop-shadow(0 0 20px rgba(138,43,226,0.8));">🔮</div>
+                                    <div>
+                                        <h3 style="font-size: 2rem; font-weight: bold; color: #ba68c8; text-shadow: 0 0 15px rgba(186,104,200,0.5);">Validator Coordinates</h3>
+                                        <p style="color: rgba(186,104,200,0.7); font-size: 1.1rem;">Lock onto our cosmic signal</p>
+                                    </div>
+                                </div>
+                                <div class="cosmos-address-box">
+                                    <code class="cosmos-address-code">lmnvaloper15fpv5dnc0s6ln5nepum4372kyml4ukr6lu6zw8</code>
+                                </div>
+                            </div>
+
+                            <div class="lumen-stats-4" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;">
+                                <div class="universe-stat">
+                                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem; filter: drop-shadow(0 0 15px rgba(138,43,226,0.7));">🌟</div>
+                                    <div class="universe-stat-value">99.9%</div>
+                                    <div class="universe-stat-label">My Uptime</div>
+                                </div>
+                                <div class="universe-stat">
+                                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem; filter: drop-shadow(0 0 15px rgba(138,43,226,0.7));">⚡</div>
+                                    <div class="universe-stat-value">Active</div>
+                                    <div class="universe-stat-label">Node Status</div>
+                                </div>
+                                <div class="universe-stat">
+                                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem; filter: drop-shadow(0 0 15px rgba(138,43,226,0.7));">🛸</div>
+                                    <div class="universe-stat-value">Multi</div>
+                                    <div class="universe-stat-label">Data Centers</div>
+                                </div>
+                                <div class="universe-stat">
+                                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem; filter: drop-shadow(0 0 15px rgba(138,43,226,0.7));">🌍</div>
+                                    <div class="universe-stat-value">24/7</div>
+                                    <div class="universe-stat-label">Monitoring</div>
                                 </div>
                             </div>
                         </div>
